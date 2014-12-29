@@ -95,7 +95,6 @@ label {
 }
 
 .tip {
-  display: none;
   position: absolute;
   background-color: none;
   font-family: Arial;
