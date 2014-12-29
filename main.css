@@ -67,6 +67,10 @@ label {
   background-color: #CCCCCC;
   z-index: 100;
   border-bottom: 2px solid black;
+  margin-right: auto;
+  text-align: center;
+  font-family: Arial;
+  font-size: 24px;
 }
 
 #page-content {
