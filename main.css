@@ -74,10 +74,10 @@ label {
 }
 
 #page-content {
-  	margin-top: 150px;
+  	margin-top: 50px;
     margin-right: auto;
     margin-left: auto;
-    /*position: relative;*/
+    position: relative;
 }
 
 #page-content>img {
@@ -86,14 +86,6 @@ label {
 	margin-left: auto;
 }
 
-#blue-base {
-  background: black;
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  width: 10px;
-  height: 10px;
-}
 
 
 
