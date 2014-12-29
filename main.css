@@ -84,3 +84,19 @@ label {
 	margin-right: auto;
 	margin-left: auto;
 }
+
+#blue-base {
+  background-color: black;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  width: 10px;
+  height: 10px;
+}
+
+
+
+
+
+
+
