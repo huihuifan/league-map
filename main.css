@@ -77,6 +77,7 @@ label {
   	margin-top: 150px;
     margin-right: auto;
     margin-left: auto;
+    position: relative;
 }
 
 #page-content>img {
@@ -86,7 +87,7 @@ label {
 }
 
 #blue-base {
-  background-color: black;
+  background: black;
   position: absolute;
   bottom: 30px;
   left: 30px;
