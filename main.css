@@ -86,11 +86,23 @@ label {
 	margin-left: auto;
 }
 
-#icons>img {
+#checkboxes {
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  width: 300px;
+  left: 5px;
+  height: 40px;
+  font-family: Arial;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.icons>img {
   opacity: 0.5;
 }
 
-#icons>img:hover {
+.icons>img:hover {
     opacity: 1.0;
 }
 
