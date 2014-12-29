@@ -79,7 +79,8 @@ label {
     margin-left: auto;
 }
 
-#page-content>div {
+#page-content>img {
+  display: block;
 	margin-right: auto;
 	margin-left: auto;
 }
