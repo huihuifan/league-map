@@ -12,8 +12,16 @@
   <div id="page-header">League of Legends, Interactive Map
 
     <div id="checkboxes">
+
       <label for="jungle_camps">Jungle Camps</label>
       <input type="checkbox" id="jungle_camps" onChange="toggleVisibility('jungle_monsters');"/><br/>
+      
+      <label for="wards">Ward Spots</label>
+      <input type="checkbox" id="wards" onChange="toggleVisibility('wards');"/><br/>
+
+      <label for="gank_paths">Gank Paths</label>
+      <input type="checkbox" id="gank_paths" onChange="toggleVisibility('ganks');"/><br/>
+
     </div>
 
   </div>
@@ -40,9 +48,6 @@
     
     <div id="red_tip" class="tip" onmousemove="showTooltip(event, 'red_tip');">Red Brambleback, Initial Spawn 2:30, Respawn 5:00. Provides Crest of Cinders buff. Provides +36 gold, +100 xp. Cinderling (2) provides +20 gold, +50 xp.</div> -->
 
-    <img id="imgemployment" src="http://www.gravatar.com/avatar/c0d7be6d99264316574791c1e4ee4cc4?s=32&d=identicon&r=PG"  style="visibility:hidden"/>
-    <img id="imgpopulation" src="http://www.gravatar.com/avatar/c0d7be6d99264316574791c1e4ee4cc4?s=32&d=identicon&r=PG"  style="visibility:hidden" />
-
     <div id="jungle_monsters" class="icons">
 
       <img src="baron.png" width="35" height="50" style="position: absolute; top: 200px; left: 520px;" class="hastooltip"  onmousemove="showTooltip(event, 'baron_tip');" onmouseout="hideTooltip(event, 'baron_tip');"/>
@@ -58,6 +63,10 @@
 
       <img src="bird.png" width="28" height="28" style="position: absolute; top: 400px; left: 620px;" class="hastooltip"  onmousemove="showTooltip(event, 'bird_tip');" onmouseout="hideTooltip(event, 'bird_tip');"//>
       <img src="bird.png" width="28" height="28" style="position: absolute; top: 250px; left: 650px;" class="hastooltip"  onmousemove="showTooltip(event, 'bird_tip');" onmouseout="hideTooltip(event, 'bird_tip');"//>
+
+    </div>
+
+    <div id="wards" class="icons">
 
     </div>
 

@@ -89,9 +89,9 @@ label {
 #checkboxes {
   position: absolute;
   z-index: 2;
-  top: 5px;
+  top: 55px;
   width: 300px;
-  left: 5px;
+  left: 1px;
   height: 40px;
   font-family: Arial;
   font-size: 12px;
