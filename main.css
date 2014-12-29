@@ -94,6 +94,16 @@ label {
     opacity: 1.0;
 }
 
+.tip {
+  display: none;
+  position: absolute;
+  background-color: none;
+  font-family: Arial;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+}
+
 
 
 

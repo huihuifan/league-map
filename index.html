@@ -14,11 +14,13 @@
   <div id="page-content">
 
     <img src="leaguemap.jpg" width="792.09" height="661.7" style="position: relative; top: 0; left: 0;"/>
-    
+
+    <div id="baron_tip" class="tip" onmousemove="showTooltip(event, 'baron_tip');">Baron </div>
+
     <div id="icons">
 
-      <img src="baron.png" width="35" height="50" style="position: absolute; top: 200px; left: 520px;"/>
-      
+      <img src="baron.png" width="35" height="50" style="position: absolute; top: 200px; left: 520px;" class="hastooltip"  onmousemove="showTooltip(event, 'baron_tip');" onmouseout="hideTooltip(event, 'baron_tip');" />
+
       <img src="gromp.png" width="35" height="30" style="position: absolute; top: 280px; left: 390px;"/>
       <img src="gromp.png" width="35" height="30" style="position: absolute; top: 360px; left: 880px;"/>
       
