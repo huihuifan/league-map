@@ -86,6 +86,13 @@ label {
 	margin-left: auto;
 }
 
+#icons>img {
+  opacity: 0.5;
+}
+
+#icons>img:hover {
+    opacity: 1.0;
+}
 
 
 
