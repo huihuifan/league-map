@@ -75,6 +75,8 @@ label {
 
 #page-content {
   	margin-top: 150px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 #page-content>div {
