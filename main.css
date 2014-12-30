@@ -74,10 +74,10 @@ label {
 }
 
 #page-content {
-  	margin-top: 50px;
-    margin-right: auto;
-    margin-left: auto;
-    position: relative;
+	margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
 }
 
 .main_image {
@@ -101,8 +101,7 @@ label {
 #additions {
   position: relative;
   top: -661.7px;
-  margin-left: auto;
-  margin-right: auto;
+  right: 0px;
 }
 
 .icons>img {
