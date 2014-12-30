@@ -107,6 +107,14 @@ label {
     -webkit-filter: saturate(2)
 }
 
+.jungle_icons>img {
+  opacity: 0.4;
+}
+
+.jungle_icons>img:hover {
+    opacity: 1.0;
+}
+
 .tip {
   display: none;
   position: absolute;
