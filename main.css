@@ -98,6 +98,14 @@ label {
   font-weight: normal;
 }
 
+#additions {
+  position: relative;
+/*  width: 792.09px;
+  height: 661.7px;*/
+  left: 0px;
+  top: -661.7px;
+}
+
 .icons>img {
   opacity: 0.7;
 }
