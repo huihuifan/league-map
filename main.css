@@ -86,11 +86,40 @@ label {
 	margin-left: auto;
 }
 
-#icons>img {
-  opacity: 0.5;
+#checkboxes {
+  position: absolute;
+  z-index: 2;
+  top: 55px;
+  width: 300px;
+  left: 1px;
+  height: 40px;
+  font-family: Arial;
+  font-size: 12px;
+  font-weight: normal;
 }
 
-#icons>img:hover {
+#additions {
+  position: relative;
+/*  width: 792.09px;
+  height: 661.7px;*/
+  left: 0px;
+  top: -661.7px;
+}
+
+.icons>img {
+  opacity: 0.7;
+}
+
+.icons>img:hover {
+    opacity: 1.0;
+    -webkit-filter: saturate(2)
+}
+
+.jungle_icons>img {
+  opacity: 0.4;
+}
+
+.jungle_icons>img:hover {
     opacity: 1.0;
 }
 
@@ -102,9 +131,8 @@ label {
   font-size: 12px;
   font-weight: bold;
   color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
-
-
 
 
 
