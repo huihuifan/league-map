@@ -100,10 +100,9 @@ label {
 
 #additions {
   position: relative;
-/*  width: 792.09px;
-  height: 661.7px;*/
-  left: 0px;
   top: -661.7px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .icons>img {
