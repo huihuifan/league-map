@@ -105,5 +105,12 @@ label {
   font-size: 14px;
 }
 
+#gank_legend {
+  font-size: 12px;
+  position: relative;
+  width: 200px;
+  left: 680px;
+  top: -540px;
+}
 
 
