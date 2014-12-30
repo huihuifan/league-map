@@ -80,7 +80,7 @@ label {
     position: relative;
 }
 
-#page-content>img {
+.main_image {
   display: block;
 	margin-right: auto;
 	margin-left: auto;
