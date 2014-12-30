@@ -18,10 +18,10 @@
       <input type="checkbox" id="jungle_camps" onChange="toggleVisibility('jungle_monsters');"/><br/>
       
       <label for="wards">Ward Guide (Blue)</label>
-      <input type="checkbox" id="wards" onChange="toggleVisibility('wards');"/><br/>
+      <input type="checkbox" id="wards" onChange="toggleVisibility('ward_icons');"/><br/>
 
       <label for="gank_paths">Gank Paths</label>
-      <input type="checkbox" id="gank_paths" onChange="toggleVisibility('ganks');"/><br/>
+      <input type="checkbox" id="gank_paths" onChange="toggleVisibility('gank');"/><br/>
 
     </div>
 
@@ -97,7 +97,7 @@
 
       </div>
 
-      <div id="wards" class="icons">
+      <div id="ward_icons" class="icons">
 
           <img src="ward.png" width="25" height="25" style="position: absolute; top: 570px; left: 880px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
           <img src="ward.png" width="25" height="25" style="position: absolute; top: 500px; left: 780px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
