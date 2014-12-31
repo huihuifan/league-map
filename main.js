@@ -13,11 +13,11 @@ function hideTooltip(e, tooltip) {
 
     e = window.event ? window.event : e;
     tooltip = document.getElementById(tooltip);
-    if(e.toElement == tooltip)
-    {
-        showTooltip(e, tooltip);
-        return;
-    }
+    // if(e.toElement == tooltip)
+    // {
+    //     showTooltip(e, tooltip);
+    //     return;
+    // }
     tooltip.style.display = "none";
 
 }
