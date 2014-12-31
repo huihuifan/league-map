@@ -4,8 +4,8 @@ function showTooltip(e, tooltip) {
     tooltip = document.getElementById(tooltip);
     if(tooltip.style.display != "block")
         tooltip.style.display = "block";
-    tooltip.style.left = event.clientX + "px";
-    tooltip.style.top = event.clientY + "px";
+    tooltip.style.left = (event.clientX + 5) + "px";
+    tooltip.style.top = (event.clientY + 5) + "px";
 
 }
 
