@@ -74,9 +74,9 @@ label {
 }
 
 #gank {
-  position: relative;
+  position: absolute;
   left: 120px;
-  top: 100px;
+  top: 0px;
 }
 
 .icons>img {
@@ -128,7 +128,7 @@ label {
   position: absolute;
   width: 200px;
   left: 680px;
-  top: -50px;
+  top: 50px;
 }
 
 #gank_text {
