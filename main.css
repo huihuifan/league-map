@@ -52,6 +52,14 @@ label {
 #additions {
   position: relative;
   top: -661.7px;
+  /*left: -792.09px;*/
+/*  width: 792.09px;
+  height: 661.7px;*/
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  z-index: 1;
 }
 
 #gank {
