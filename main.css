@@ -52,13 +52,13 @@ label {
 #additions {
   position: relative;
   top: -661.7px;
-  /*left: -792.09px;*/
-/*  width: 792.09px;
-  height: 661.7px;*/
+  width: 792.09px;
+  height: 661.7px;
+  left: -230px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
   z-index: 1;
 }
 
