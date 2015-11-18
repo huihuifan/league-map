@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>  
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  
+  <div id="page-header">
+
+    <span class="descrip">
+      
+      League of Legends Interactive Map
+    
+    </span>    
+
+    <span class="checknote">
+
+      <font style="font-size: 12px; font-family: Arial;">Toggle the checkboxes to show information on the map, and mouseover map icons for details.</font>
+    
+    </span>
+    
+    <span class="sidenote">
+    
+      <font style="font-size: 12px; font-family: Arial;">Jungle camp gold and experience are initial values unmodified by level.</font>
+    
+    </span>
+  
+  </div>
+
+  <div id="page-content">
+
+    <div id="checkboxes">
+
+      <label for="jungle_camps">Jungle Camps</label>
+      <input type="checkbox" id="jungle_camps" onChange="toggleVisibility('jungle_monsters');" checked/><br/>
+      
+      <label for="wards">Ward Guide (Blue)</label>
+      <input type="checkbox" id="wards" onChange="toggleVisibility('ward_icons');"/><br/>
+
+      <label for="gank_paths">Warding over terrain</label>
+      <input type="checkbox" id="gank_paths" onChange="toggleVisibility('terrain')";><br/>
+
+      <label for="gank_paths">Gank Paths (Red)</label>
+      <input type="checkbox" id="gank_paths" onChange="toggleVisibility('gank')"; onChange="toggleVisibility('gank_legend')";/><br/>
+
+
+    </div>
+
+    <div id="map">
+      <img src="leaguemap.jpg" class="main_image"/>
+
+      <div id="additions">
+
+        <div id="gank" style="visibility:hidden">
+
+          <img src="paths.png" width="617.14" height="486.7"/>
+          
+          <div id="gank_legend">
+            
+            <div id="gank_text"><font style="font-size: 18px; font-family: 'Yanone Kaffeesatz', sans-serif;"><b>Gank Path Legend</b></font><br></div>
+            <font color="white" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"><b>White Arrows</b></font> indicate a path that should be used if the enemy is overextended pushing your turret.<br>
+
+            <font color="red" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"><b>Red Arrows </b></font> represent a path that avoids more common ward locations, where the enemy cannot see you until you are much closer. This path puts you behind the enemy, cutting off their escape route. <br>
+            
+            <font color="lime" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"><b>Green Arrows</b></font> represent the least warded way to get to a lane. When you gank, have your allies in lane ensure that there is no vision in the bush closest to you, then hide in the bush until your ally initiates, or wait until the opponent face checks the bush. However, if the opponent has the bush warded, then you lose out on valuable experience and gold. <br>
+            
+            <font color="CornflowerBlue" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"><b>Blue Arrows </b></font>represent a risky gank that forces you to dive the enemy turret. If you attempt such a gank, landing all your spells is key, as you take increasing damage the more times you get hit by the same turret. You should take this gank path if the enemy is being very careful to avoid ganks. <br>
+          
+          </div>
+
+        </div>
+
+        <div id="baron_tip" class="tip" onmousemove="showTooltip(event, 'baron_tip');" onmouseout="hideTooltip(event, 'baron_tip')">
+          <b>Baron Nashor</b> <br> 
+          Initial Spawn 20:00 <br> 
+          Respawn 7:00 <br> 
+          Provides Hand of Baron to all teammates. <br> 
+          Provides +325 gold and +900 xp to all teammates.
+        </div>
+        
+        <div id="dragon_tip" class="tip" onmousemove="showTooltip(event, 'dragon_tip');" onmouseout="hideTooltip(event, 'dragon_tip')">
+          <b>Dragon</b> <br> 
+          Initial Spawn 2:30 <br> 
+          Respawn 6:00 <br> 
+          Provides a stack of Dragon Slayer to all teammates <br>
+          Provides +25 gold, +75 xp to killer and nearby allies.
+        </div>
+        
+        <div id="gromp_tip" class="tip" onmousemove="showTooltip(event, 'gromp_tip');" onmouseout="hideTooltip(event, 'gromp_tip')">
+          <b>Gromp </b><br> 
+          Initial Spawn 1:55 <br> 
+          Respawn 1:40 <br>
+          Provides +62 gold, +200 xp.
+        </div>
+        
+        <div id="wolf_tip" class="tip" onmousemove="showTooltip(event, 'wolf_tip');" onmouseout="hideTooltip(event, 'wolf_tip')">
+          <b>Murk Wolves</b> <br> 
+          Initial Spawn 1:55<br> 
+          Respawn 1:40 <br>
+          Greater Murk Wolf provides +42 gold, +142 xp. <br> 
+          Murk Wolves (2) provide +12 gold, +30 xp.
+        </div>
+        
+        <div id="stone_tip" class="tip" onmousemove="showTooltip(event, 'stone_tip');" onmouseout="hideTooltip(event, 'stone_tip')">
+          <b>Krug </b><br>
+          Initial Spawn 1:55<br> 
+          Respawn 1:40<br> 
+          Ancient Krug provides +60 gold, +150 xp<br> 
+          Krug provides +14 gold, +50 xp.
+        </div>
+        
+        <div id="bird_tip" class="tip" onmousemove="showTooltip(event, 'bird_tip');" onmouseout="hideTooltip(event, 'bird_tip')">
+          <b>Raptors</b><br> 
+          Initial Spawn 1:55<br>
+          Respawn 1:40<br> 
+          Crimson Raptor provides +41 gold, +140 xp<br> 
+          Raptors (3) provide +9 gold, +20 xp.
+        </div>
+        
+        <div id="rift_tip" class="tip" onmousemove="showTooltip(event, 'rift_tip');" onmouseout="hideTooltip(event, 'rift_tip')">
+          <b>Rift Scuttler</b> <br> 
+          Initial Spawn 2:30<br> 
+          Respawn 3:00<br>
+          Provides +35 gold, +35 xp, vision of Baron or Dragon pit. <br> 
+          Moves around in the river.
+        </div>
+        
+        <div id="blue_tip" class="tip" onmousemove="showTooltip(event, 'blue_tip');" onmouseout="hideTooltip(event, 'blue_tip')">
+          <b>Blue Sentinel</b><br> 
+          Initial Spawn 1:55<br> 
+          Respawn 5:00<br>
+          Provides Crest of Insight buff<br> 
+          Provides +35 gold, + 100 xp<br>
+          Sentry (2) provide +20 gold, +50 xp.
+        </div>
+        
+        <div id="red_tip" class="tip" onmousemove="showTooltip(event, 'red_tip');" onmouseout="hideTooltip(event, 'red_tip')">
+          <b>Red Brambleback</b><br>  
+          Initial Spawn 2:30<br>  
+          Respawn 5:00<br>  
+          Provides Crest of Cinders buff<br>  
+          Provides +36 gold, +100 xp<br>  
+          Cinderling (2) provides +20 gold, +50 xp.
+        </div>
+
+        <div id="defensive_lane_tip" class="tip" onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip')">
+          <b>Defensive Lane Ward </b><br> 
+          Sights out bushes, watches for ganks from mid or jungle.
+        </div>
+
+        <div id="defensive_jungle_tip" class="tip" onmousemove="showTooltip(event, 'defensive_jungle_tip');" onmouseout="hideTooltip(event, 'defensive_jungle_tip')">
+          <b>Defensive Jungle Ward </b><br> 
+          Protect jungler from invasion, protect from ganks. <br>
+          Ward jungle defensively if falling behind.
+        </div>
+
+        <div id="global_control_tip" class="tip" onmousemove="showTooltip(event, 'global_control_tip');" onmouseout="hideTooltip(event, 'global_control_tip')">
+          <b>Objectives Ward </b><br> 
+          Watch to see if enemy team is trying to take Baron or Dragon.
+        </div>
+
+        <div id="aggressive_lane_tip" class="tip" onmousemove="showTooltip(event, 'aggressive_lane_tip');" onmouseout="hideTooltip(event, 'aggressive_lane_tip')">
+          <b>Aggressive Lane Ward</b> <br> 
+          Allows you to safely pressure a lane, <br>
+          reduces chance of being caught out pushing.
+        </div>
+
+        <div id="aggressive_jungle_tip" class="tip" onmousemove="showTooltip(event, 'aggressive_jungle_tip');" onmouseout="hideTooltip(event, 'aggressive_jungle_tip')">
+          <b>Aggressive Jungle Ward </b>
+          <br> Allows you to safely pressure lanes and farm the enemy jungle.
+        </div>
+
+        <div id="scouting_tip" class="tip" onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip')">
+          <b>Scouting Ward</b> <br> 
+          Place these when your team goes to destroy a turret. <br>
+          Provides information on where enemies are headed as they leave and cross lanes in their territory.
+        </div>
+
+        <div id="siege_tip" class="tip" onmousemove="showTooltip(event, 'siege_tip');" onmouseout="hideTooltip(event, 'siege_tip')">
+          <b>Siege Ward </b><br> 
+          Place these to spot enemy team to better poke,<br> 
+          and gather information when attempting to initiate (or when you don't want to be initiated upon).
+        </div>
+
+        <div id="ward_spot_tip" class="tip" onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip')">
+          Stand here as close to the wall as possible, <br>and place the ward at maximum range (cursor will turn red), <br>and the ward will be placed over the wall into the bush. <br>Very useful if your team is behind or if you don't want to facecheck the bush. <br>Turning smartcast off makes this  easier. 
+        </div>
+
+        <div id="jungle_monsters" class="jungle_icons" style="visibility:visible;">
+
+          <img src="baron.png" width="40" height="50" style="position: absolute; top: 200px; left: 290px;" class="hastooltip"  onmousemove="showTooltip(event, 'baron_tip');" onmouseout="hideTooltip(event, 'baron_tip');"/>
+
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 280px; left: 160px;" class="hastooltip"  onmousemove="showTooltip(event, 'gromp_tip');" onmouseout="hideTooltip(event, 'gromp_tip');"/>
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 360px; left: 650px;" class="hastooltip"  onmousemove="showTooltip(event, 'gromp_tip');" onmouseout="hideTooltip(event, 'gromp_tip');"/>
+          
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 350px; left: 240px;" class="hastooltip"  onmousemove="showTooltip(event, 'wolf_tip');" onmouseout="hideTooltip(event, 'wolf_tip');"/>
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 280px; left: 570px;" class="hastooltip"  onmousemove="showTooltip(event, 'wolf_tip');" onmouseout="hideTooltip(event, 'wolf_tip');"/>
+          
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 510px; left: 450px;" class="hastooltip"  onmousemove="showTooltip(event, 'stone_tip');" onmouseout="hideTooltip(event, 'stone_tip');"/>
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 140px; left: 360px;" class="hastooltip"  onmousemove="showTooltip(event, 'stone_tip');" onmouseout="hideTooltip(event, 'stone_tip');"/>
+
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 400px; left: 380px;" class="hastooltip"  onmousemove="showTooltip(event, 'bird_tip');" onmouseout="hideTooltip(event, 'bird_tip');"/>
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 240px; left: 420px;" class="hastooltip"  onmousemove="showTooltip(event, 'bird_tip');" onmouseout="hideTooltip(event, 'bird_tip');"/>
+
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 410px; left: 550px;" class="hastooltip"  onmousemove="showTooltip(event, 'rift_tip');" onmouseout="hideTooltip(event, 'rift_tip');"/>
+          <img src="dot.png" width="40" height="40" style="position: absolute; top: 245px; left: 270px;" class="hastooltip"  onmousemove="showTooltip(event, 'rift_tip');" onmouseout="hideTooltip(event, 'rift_tip');"/>
+
+          <img src="blue.png" width="40" height="40" style="position: absolute; top: 300px; left: 240px;" class="hastooltip"  onmousemove="showTooltip(event, 'blue_tip');" onmouseout="hideTooltip(event, 'blue_tip');"/>
+          <img src="blue.png" width="40" height="40" style="position: absolute; top: 340px; left: 570px;" class="hastooltip"  onmousemove="showTooltip(event, 'blue_tip');" onmouseout="hideTooltip(event, 'blue_tip');"/>
+
+          <img src="red.png" width="40" height="40" style="position: absolute; top: 450px; left: 430px;" class="hastooltip"  onmousemove="showTooltip(event, 'red_tip');" onmouseout="hideTooltip(event, 'red_tip');"/>
+          <img src="red.png" width="40" height="40" style="position: absolute; top: 190px; left: 390px;" class="hastooltip"  onmousemove="showTooltip(event, 'red_tip');" onmouseout="hideTooltip(event, 'red_tip');"/>
+
+          <img src="dragon.png" width="60" height="60" style="position: absolute; top: 440px; left: 520px; opacity: .9;" class="hastooltip"  onmousemove="showTooltip(event, 'dragon_tip');" onmouseout="hideTooltip(event, 'dragon_tip');"/>
+
+        </div>
+
+        <div id="terrain" class="icons" style="visibility:hidden;">
+
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 370px; left: 320px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 280px; left: 500px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 200px; left: 290px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 450px; left: 450px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 200px; left: 380px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 470px; left: 540px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 460px; left: 500px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 220px; left: 200px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+            <img src="ward_spot.png" width="25" height="25" style="position: absolute; top: 450px; left: 650px;" class="hastooltip"  onmousemove="showTooltip(event, 'ward_spot_tip');" onmouseout="hideTooltip(event, 'ward_spot_tip');"/>
+        
+        </div>
+
+        <div id="ward_icons" class="icons" style="visibility:hidden;">
+
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 570px; left: 650px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 500px; left: 550px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 540px; left: 500px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 360px; left: 510px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 360px; left: 450px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 300px; left: 370px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 290px; left: 300px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 190px; left: 210px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 230px; left: 170px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 140px; left: 120px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 120px; left: 150px;" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_lane_tip');" onmouseout="hideTooltip(event, 'defensive_lane_tip');"/>
+
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 430px; left: 460px; -webkit-filter: hue-rotate(320deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_jungle_tip');" onmouseout="hideTooltip(event, 'defensive_jungle_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 430px; left: 370px; -webkit-filter: hue-rotate(320deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_jungle_tip');" onmouseout="hideTooltip(event, 'defensive_jungle_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 480px; left: 440px; -webkit-filter: hue-rotate(320deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_jungle_tip');" onmouseout="hideTooltip(event, 'defensive_jungle_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 340px; left: 290px; -webkit-filter: hue-rotate(320deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_jungle_tip');" onmouseout="hideTooltip(event, 'defensive_jungle_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 310px; left: 220px; -webkit-filter: hue-rotate(320deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'defensive_jungle_tip');" onmouseout="hideTooltip(event, 'defensive_jungle_tip');"/>
+
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 400px; left: 510px; -webkit-filter: hue-rotate(250deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'global_control_tip');" onmouseout="hideTooltip(event, 'global_control_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 430px; left: 540px; -webkit-filter: hue-rotate(250deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'global_control_tip');" onmouseout="hideTooltip(event, 'global_control_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 260px; left: 310px; -webkit-filter: hue-rotate(250deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'global_control_tip');" onmouseout="hideTooltip(event, 'global_control_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 230px; left: 270px; -webkit-filter: hue-rotate(250deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'global_control_tip');" onmouseout="hideTooltip(event, 'global_control_tip');"/>
+
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 530px; left: 690px; -webkit-filter: hue-rotate(200deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_lane_tip');" onmouseout="hideTooltip(event, 'aggressive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 470px; left: 620px; -webkit-filter: hue-rotate(200deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_lane_tip');" onmouseout="hideTooltip(event, 'aggressive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 420px; left: 660px; -webkit-filter: hue-rotate(200deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_lane_tip');" onmouseout="hideTooltip(event, 'aggressive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 120px; left: 330px; -webkit-filter: hue-rotate(200deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_lane_tip');" onmouseout="hideTooltip(event, 'aggressive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 160px; left: 280px; -webkit-filter: hue-rotate(200deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_lane_tip');" onmouseout="hideTooltip(event, 'aggressive_lane_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 210px; left: 360px; -webkit-filter: hue-rotate(200deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_lane_tip');" onmouseout="hideTooltip(event, 'aggressive_lane_tip');"/>
+      
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 220px; left: 450px; -webkit-filter: hue-rotate(150deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_jungle_tip');" onmouseout="hideTooltip(event, 'aggressive_jungle_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 170px; left: 490px; -webkit-filter: hue-rotate(150deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_jungle_tip');" onmouseout="hideTooltip(event, 'aggressive_jungle_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 310px; left: 530px; -webkit-filter: hue-rotate(150deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_jungle_tip');" onmouseout="hideTooltip(event, 'aggressive_jungle_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 340px; left: 620px; -webkit-filter: hue-rotate(150deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'aggressive_jungle_tip');" onmouseout="hideTooltip(event, 'aggressive_jungle_tip');"/>
+
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 110px; left: 240px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 100px; left: 390px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 100px; left: 530px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 290px; left: 450px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 220px; left: 530px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 190px; left: 570px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 460px; left: 700px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 340px; left: 700px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 220px; left: 690px; -webkit-filter: hue-rotate(40deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'scouting_tip');" onmouseout="hideTooltip(event, 'scouting_tip');"/>
+
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 210px; left: 630px; -webkit-filter: hue-rotate(180deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'siege_tip');" onmouseout="hideTooltip(event, 'siege_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 140px; left: 550px; -webkit-filter: hue-rotate(180deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'siege_tip');" onmouseout="hideTooltip(event, 'siege_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 510px; left: 270px; -webkit-filter: hue-rotate(180deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'siege_tip');" onmouseout="hideTooltip(event, 'siege_tip');"/>
+            <img src="ward.png" width="25" height="25" style="position: absolute; top: 440px; left: 190px; -webkit-filter: hue-rotate(180deg)saturate(5);" class="hastooltip"  onmousemove="showTooltip(event, 'siege_tip');" onmouseout="hideTooltip(event, 'siege_tip');"/>
+            
+        </div>
+        
+      </div>
+
+    </div>
+
+  </div>
+
+  
+  <script src="main.js"></script>
+
+</div>
+
+<div id="footer">Created by <a href="https://github.com/huihuifan">Angela Fan</a>. 
+  Warding guide with help from <a href="http://team-dignitas.net/articles/blogs/League-of-Legends/3609/League-of-Legends-An-extended-beginners-guide-to-warding">here</a>. 
+  Ganking guide with help from <a href="http://team-dignitas.net/articles/blogs/League-of-Legends/1313/Ganking-101-How-to-Gank"> here</a>.  
+  Baron Nashor image from <a href="http://austindarkwolf.deviantart.com/">here</a>.
+</div>
+
+</body>
+
+</html>
+
+
+
+
+
